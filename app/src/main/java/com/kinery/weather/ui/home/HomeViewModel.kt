@@ -15,6 +15,14 @@ class HomeViewModel : ViewModel() {
     private val _weatherState = MutableStateFlow<WeatherResponse?>(null)
     val weatherState: StateFlow<WeatherResponse?> = _weatherState
 
+    fun onLocationPermissionGranted() {
+        // TODO: Proceed with location-related logic
+    }
+
+    fun onLocationPermissionDenied() {
+        // TODO: Show fallback or error state
+    }
+
     fun fetchWeather(city: String) {
         viewModelScope.launch {
             try {

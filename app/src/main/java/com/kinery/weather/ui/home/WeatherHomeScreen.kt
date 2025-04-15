@@ -1,5 +1,7 @@
 package com.kinery.weather.ui.home
 
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,6 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import android.Manifest
 import com.kinery.weather.R
 import com.kinery.weather.ui.theme.WeatherTheme
 
@@ -24,10 +27,25 @@ import com.kinery.weather.ui.theme.WeatherTheme
 fun WeatherHomeScreen(
     modifier: Modifier,
 ) {
-
     //TODO: This call needs to be moved to main activity
     val viewModel: HomeViewModel = viewModel()
     val weather = viewModel.weatherState.collectAsState().value
+
+    val locationPermissionResultLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if(isGranted) {
+            viewModel.onLocationPermissionGranted()
+        }
+        else {
+            viewModel.onLocationPermissionDenied()
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        locationPermissionResultLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+    }
+
     LaunchedEffect(Unit) {
         viewModel.fetchWeather("Minneapolis") //TODO: dynamic city from location
     }
