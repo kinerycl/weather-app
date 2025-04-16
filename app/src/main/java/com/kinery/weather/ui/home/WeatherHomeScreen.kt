@@ -18,7 +18,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import android.Manifest
 import com.kinery.weather.R
 import com.kinery.weather.ui.theme.WeatherTheme
 
@@ -32,18 +31,11 @@ fun WeatherHomeScreen(
     val weather = viewModel.weatherState.collectAsState().value
 
     val locationPermissionResultLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestPermission()
-    ) { isGranted ->
-        if(isGranted) {
-            viewModel.onLocationPermissionGranted()
+        contract = ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        viewModel.permissionsToRequest.forEach {
+            //TODO: add dialog state, to vm
         }
-        else {
-            viewModel.onLocationPermissionDenied()
-        }
-    }
-
-    LaunchedEffect(Unit) {
-        locationPermissionResultLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
     }
 
     LaunchedEffect(Unit) {
