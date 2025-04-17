@@ -1,22 +1,22 @@
 package com.kinery.weather.ui.permissions
 
-// TODO: move text to string res
-// TODO: create sealed class, abstract val, & open val notes
-sealed class PermissionDialogState {
-    abstract val title: String
-    abstract val message: String
-    abstract val confirmButtonText: String
-    open val dismissButtonText: String = "Cancel"
+import com.kinery.weather.R.string
 
-    data object FirstTime : PermissionDialogState() {
-        override val title = "Allow Location Access?"
-        override val message = "To give you accurate, real-time weather updates for your area, we need access to your device’s location."
-        override val confirmButtonText = "Allow"
+sealed class PermissionDialogState {
+    abstract val title: Int
+    abstract val message: Int
+    abstract val confirmButtonText: Int
+    open val dismissButtonText: Int = string.permission_dialog_cancel
+
+    data object AccessRequest : PermissionDialogState() {
+        override val title = string.permission_dialog_request_title
+        override val message = string.permission_dialog_request_message
+        override val confirmButtonText = string.permission_dialog_request_confirm_text
     }
 
     data object PermanentlyDenied : PermissionDialogState() {
-        override val title = "Location Access Disabled"
-        override val message = "It looks like location access has been turned off. To show local weather, please enable location permissions in your settings."
-        override val confirmButtonText = "Open Settings"
+        override val title = string.permission_dialog_denied_title
+        override val message = string.permission_dialog_denied_message
+        override val confirmButtonText = string.permission_dialog_denied_confirm_text
     }
 }

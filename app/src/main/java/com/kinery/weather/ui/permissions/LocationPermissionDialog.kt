@@ -5,11 +5,12 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.kinery.weather.ui.theme.WeatherTheme
 
 @Composable
-fun LocationPermissionDialog(
+internal fun LocationPermissionDialog(
     state: PermissionDialogState,
     onAllow: () -> Unit,
     onDismiss: () -> Unit,
@@ -18,18 +19,18 @@ fun LocationPermissionDialog(
     AlertDialog(
         modifier = modifier,
         onDismissRequest = onDismiss,
-        title = { Text(state.title) },
+        title = { Text(stringResource(state.title)) },
         text = {
-            Text(state.message)
+            Text(stringResource(state.message))
         },
         confirmButton = {
             TextButton(onClick = onAllow) {
-                Text(state.confirmButtonText)
+                Text(stringResource(state.confirmButtonText))
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text(state.dismissButtonText)
+                Text(stringResource(state.dismissButtonText))
             }
         }
     )
@@ -40,7 +41,7 @@ fun LocationPermissionDialog(
 private fun LocationPermissionDialogPreview() {
     WeatherTheme {
         LocationPermissionDialog(
-            state = PermissionDialogState.FirstTime,
+            state = PermissionDialogState.AccessRequest,
             onAllow = {},
             onDismiss = {},
         )

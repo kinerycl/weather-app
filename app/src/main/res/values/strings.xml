@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Weather</string>
+    <string name="permission_dialog_cancel">Cancel</string>
+    <string name="permission_dialog_request_title">Allow Location Access?</string>
+    <string name="permission_dialog_request_message">To give you accurate, real-time weather updates for your area, we need access to your device’s location.</string>
+    <string name="permission_dialog_request_confirm_text">Allow</string>
+    <string name="permission_dialog_denied_title">Location Access Disabled</string>
+    <string name="permission_dialog_denied_message">It looks like location access has been turned off. To show local weather, please enable location permissions in your settings.</string>
+    <string name="permission_dialog_denied_confirm_text">Open Settings</string>
 </resources>

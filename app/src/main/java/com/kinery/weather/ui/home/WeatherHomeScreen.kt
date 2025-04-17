@@ -19,6 +19,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.kinery.weather.R
+import com.kinery.weather.ui.permissions.LocationPermissionDialog
+import com.kinery.weather.ui.permissions.PermissionDialogState
 import com.kinery.weather.ui.theme.WeatherTheme
 
 
@@ -41,6 +43,13 @@ fun WeatherHomeScreen(
     LaunchedEffect(Unit) {
         viewModel.fetchWeather("Minneapolis") //TODO: dynamic city from location
     }
+
+    //TODO: add real data, trigger show/hide
+    LocationPermissionDialog(
+        state = PermissionDialogState.AccessRequest,
+        onAllow = {},
+        onDismiss = {},
+    )
 
     Column(
         modifier = modifier.fillMaxSize().padding(16.dp),
