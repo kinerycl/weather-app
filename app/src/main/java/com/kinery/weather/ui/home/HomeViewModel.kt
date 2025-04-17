@@ -1,6 +1,5 @@
 package com.kinery.weather.ui.home
 
-import android.Manifest.permission
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kinery.weather.data.model.WeatherResponse
@@ -16,13 +15,8 @@ class HomeViewModel : ViewModel() {
     private val _weatherState = MutableStateFlow<WeatherResponse?>(null)
     val weatherState: StateFlow<WeatherResponse?> = _weatherState
 
-    val permissionsToRequest = listOf(
-        permission.ACCESS_FINE_LOCATION,
-        permission.ACCESS_COARSE_LOCATION,
-    )
 
     //TODO: a dialog state is needed
-
     fun onLocationPermissionGranted() {
         // TODO: Proceed with location-related logic
     }

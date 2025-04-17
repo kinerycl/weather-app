@@ -1,5 +1,6 @@
 package com.kinery.weather.ui.home
 
+import android.Manifest
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
@@ -19,8 +20,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.kinery.weather.R
-import com.kinery.weather.ui.permissions.LocationPermissionDialog
-import com.kinery.weather.ui.permissions.PermissionDialogState
 import com.kinery.weather.ui.theme.WeatherTheme
 
 
@@ -32,12 +31,20 @@ fun WeatherHomeScreen(
     val viewModel: HomeViewModel = viewModel()
     val weather = viewModel.weatherState.collectAsState().value
 
+
     val locationPermissionResultLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestMultiplePermissions()
-    ) { permissions ->
-        viewModel.permissionsToRequest.forEach {
-            //TODO: add dialog state, to vm
+        contract = ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if(isGranted) {
+            viewModel.onLocationPermissionGranted()
         }
+        else {
+            viewModel.onLocationPermissionDenied()
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        locationPermissionResultLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
     }
 
     LaunchedEffect(Unit) {
@@ -45,11 +52,11 @@ fun WeatherHomeScreen(
     }
 
     //TODO: add real data, trigger show/hide
-    LocationPermissionDialog(
-        state = PermissionDialogState.AccessRequest,
-        onAllow = {},
-        onDismiss = {},
-    )
+//    LocationPermissionDialog(
+//        state = PermissionDialogState.AccessRequest,
+//        onAllow = {},
+//        onDismiss = {},
+//    )
 
     Column(
         modifier = modifier.fillMaxSize().padding(16.dp),
